@@ -1,11 +1,19 @@
 import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
 	// write your code here
-        crearArbol("aaaaabbccccccdf");
+        Scanner input = new Scanner(System.in);
+        System.out.println("escriba la secuencia que desea, que sea mas larga de 1 caracter");
+        String frase = input.nextLine();
+        crearArbol(frase);
+        System.out.println(Huffman.getTabla().toString());
+        String mensaje_codificado = Huffman.codificar(frase);
+        System.out.println(mensaje_codificado);
+        System.out.println(Huffman.descodificar(mensaje_codificado));
     }
 
     public static void crearArbol(String frase){
@@ -36,12 +44,9 @@ public class Main {
             caracteres[aux]= lletras[aux];
             frecuencia[aux]=frequencias[aux];
         }
-        System.out.println("hola");
         int[] frecuencias_ordenadas = frecuencia;
         char[] caracteres_ordenados = new char[contador];
-
-
-        System.out.println(caracteres + "\n" + frecuencia);
+        Huffman.arbol(caracteres, frecuencia);
     }
 
 
