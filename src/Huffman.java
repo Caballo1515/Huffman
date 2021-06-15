@@ -2,11 +2,13 @@ public class Huffman {
     private static Nodo[] nodosOrdenados = null;
     private  static  String[][] tabla = null;
     private static Nodo pdi0 = null, heap = null, pdi1 = null;
+    private static int coste_computacional;
+    public static int mida_arbol;
 
     public static String getTabla() {
         String tabla_string = "";
         for (int i =0; i!=tabla.length; i++){
-            tabla_string = tabla_string + "[" + tabla[i][0] + " " + tabla[i][1] + "]" + "\n";
+            tabla_string = tabla_string + "[<" + tabla[i][0] + "> <" + tabla[i][1] + ">]" + "\n";
         }
         return tabla_string;
     }
@@ -30,6 +32,7 @@ public class Huffman {
         for (i=0; i!= nodos_ordenados.length; i++){
             nodosOrdenados[i] = new Nodo(nodos_ordenados[i].getLetra(), nodos_ordenados[i].getFrecuencia());
         }
+        mida_arbol = nodos_ordenados.length;
         i=0;
         while (nodos_ordenados.length!=1){
             i=0;
@@ -37,6 +40,7 @@ public class Huffman {
             i++;
             Nodo hijo1 = nodos_ordenados[i];
             Nodo enlace = new Nodo('\u0000', hijo0.getFrecuencia()+hijo1.getFrecuencia());
+            mida_arbol++;
             enlace.setHijo0(hijo0);
             enlace.setHijo1(hijo1);
             hijo0.setPadre(enlace);
