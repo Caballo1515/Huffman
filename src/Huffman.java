@@ -2,7 +2,7 @@ public class Huffman {
     private static Nodo[] nodosOrdenados = null;
     private  static  String[][] tabla = null;
     private static Nodo pdi0 = null, heap = null, pdi1 = null;
-    private static int coste_computacional;
+    public static int coste_computacional_arbol, coste_computacional_codificacion, coste_computacional_descodificacion, coste_computacional_tabla;
     public static int mida_arbol;
 
     public static String getTabla() {
@@ -14,13 +14,16 @@ public class Huffman {
     }
 
     public static Nodo arbol(char[] caracteres, int[] frecuencias){
+        coste_computacional_arbol = 1;
 
         Nodo[] nodos_ordenados = new Nodo[caracteres.length];
         nodosOrdenados = new Nodo[caracteres.length];
         int i;
         for (i=0;i!= caracteres.length;i++ ){
+            coste_computacional_arbol++;
             int posicion=0, minimo=1000;
             for (int x = 0; x != caracteres.length; x++){
+                coste_computacional_arbol++;
                 if(minimo > frecuencias[x] && frecuencias[x] != -1){
                     minimo = frecuencias[x];
                     posicion = x;
@@ -30,11 +33,13 @@ public class Huffman {
             frecuencias[posicion] = -1;
         }
         for (i=0; i!= nodos_ordenados.length; i++){
+            coste_computacional_arbol++;
             nodosOrdenados[i] = new Nodo(nodos_ordenados[i].getLetra(), nodos_ordenados[i].getFrecuencia());
         }
         mida_arbol = nodos_ordenados.length;
         i=0;
         while (nodos_ordenados.length!=1){
+            coste_computacional_arbol++;
             i=0;
             Nodo hijo0 = nodos_ordenados[i];
             i++;
@@ -48,6 +53,7 @@ public class Huffman {
             Nodo[] nodos = new Nodo[nodos_ordenados.length-1];
             nodos[0] = enlace;
             for (int x=1; x!=nodos.length;x++ ){
+                coste_computacional_arbol++;
                 nodos[x] = nodos_ordenados[x+1];
             }
             nodos_ordenados = new Nodo[nodos.length];
@@ -55,8 +61,10 @@ public class Huffman {
             nodos = new Nodo[nodos.length];
 
             for (i=0;i!= nodos_ordenados.length;i++ ){
+                coste_computacional_arbol++;
                 int posicion=0, minimo=1000;
                 for (int x = 0; x != nodos_ordenados.length; x++){
+                    coste_computacional_arbol++;
                     if(minimo > nodos_ordenados[x].getFrecuencia() && nodos_ordenados[x].getFrecuencia() != -1){
                         minimo = nodos_ordenados[x].getFrecuencia();
                         posicion = x;
@@ -74,9 +82,11 @@ public class Huffman {
     }
 
     public static void tabla(){
+        coste_computacional_tabla = 1;
         tabla = new String[nodosOrdenados.length][2];
         int i;
         for (i = 0; i!= nodosOrdenados.length; i++){
+            coste_computacional_tabla++;
             tabla[i][0] = String.valueOf(nodosOrdenados[i].getLetra());
         }
         int contador = 0;
@@ -84,6 +94,7 @@ public class Huffman {
         int aux = 0;
         String codigo ="";
         while (contador!=nodosOrdenados.length){
+            coste_computacional_tabla++;
             if (pdi0.getHijo0()!=null && !pdi0.getHijo0().isApuntado() && aux ==0){
                 codigo = codigo+0;
                 pdi0 = pdi0.getHijo0();
@@ -99,6 +110,7 @@ public class Huffman {
             } else {
                 i=0;
                 while (!pdi0.isApuntado()){
+                    coste_computacional_tabla++;
                     if(tabla[i][0].equals(String.valueOf(pdi0.getLetra()))){
                         pdi0.setApuntado(true);
                         tabla[i][1] = codigo;
@@ -117,10 +129,13 @@ public class Huffman {
     }
 
     public static String codificar(String mesaje){
+        coste_computacional_codificacion = 1;
         String codificado = "";
         for (int i =0; i!= mesaje.length(); i++){
+            coste_computacional_codificacion++;
             int x =0;
             while (!tabla[x][0].equals(String.valueOf(mesaje.charAt(i)))){
+                coste_computacional_codificacion++;
                 x++;
             }
             codificado = codificado + tabla[x][1];
@@ -129,9 +144,11 @@ public class Huffman {
     }
 
     public static String descodificar(String mensaje_codificado){
+        coste_computacional_descodificacion = 1;
         pdi0 = heap;
         String mensaje_descodificado = "";
         for(int i=0; i!=(mensaje_codificado.length()); i++){
+            coste_computacional_descodificacion++;
             if(mensaje_codificado.charAt(i) == '1' && pdi0.getHijo1()!=null ){
                 pdi0=pdi0.getHijo1();
             }else if(mensaje_codificado.charAt(i) == '0' && pdi0.getHijo0()!=null){
