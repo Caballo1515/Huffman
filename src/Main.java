@@ -26,8 +26,10 @@ public class Main {
         char[] lletras = new char[frase.length()];
         int[] frequencias = new int[frase.length()];
         int aux, contador;
+        //Creo un bucle que recorre toda la frase introducida para crear los dos arrays
         for (int i=0;i<frase.length();i++){
             aux=0;
+            //'\u0000' valor por defecto de un array de char
             while (lletras[aux]!= '\u0000'  && lletras[aux] != frase.charAt(i)){
                 aux++;
             }
@@ -40,6 +42,7 @@ public class Main {
         }
         aux=0;
         contador=0;
+        //Si existen frases con caracteres n!=0 caracteres con frecuencia 1 etrará en el catch
         try {
             while (lletras[aux]!='\u0000'){
                 aux++;
@@ -49,7 +52,7 @@ public class Main {
             contador = lletras.length;
             aux = lletras.length;
         }
-
+        //Redimensiono los arrays para que sean de longitud de cantidad de caracteres que tiene la frase
         char[] caracteres = new char[contador];
         int[] frecuencia = new int[contador];
         for(aux = 0 ; aux< contador; aux++){
@@ -58,6 +61,7 @@ public class Main {
         }
         int[] frecuencias_ordenadas = frecuencia;
         char[] caracteres_ordenados = new char[contador];
+        //en el caso que solo se utilice un caracter
         if(caracteres_ordenados.length==1){
             throw new RuntimeException("\ntienes que usar mas de un caracter");
         }
